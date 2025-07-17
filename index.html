@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>سلسلة تعليم React للمبتدئين</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+  <style>
+    body {
+      font-family: 'Cairo', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+    }
+    .hero-section {
+      background: linear-gradient(120deg, #667eea 60%, #764ba2 100%);
+      border-radius: 0 0 32px 32px;
+      box-shadow: 0 8px 32px rgba(102,126,234,0.10);
+      padding: 3.5rem 1rem 2.5rem 1rem;
+      text-align: center;
+      color: #fff;
+      margin-bottom: 2.5rem;
+      position: relative;
+    }
+    .hero-logo {
+      max-width: 120px;
+      /* Remove border-radius and box-shadow for a regular image */
+      border-radius: 0;
+      box-shadow: none;
+      background: #fff;
+      padding: 10px;
+      margin-bottom: 1.2rem;
+    }
+    .hero-title {
+      font-size: 2.8rem;
+      font-weight: bold;
+      margin-bottom: 1rem;
+    }
+    .hero-subtitle {
+      font-size: 1.35rem;
+      margin-bottom: 1.5rem;
+    }
+    .hero-btn {
+      font-size: 1.1rem;
+      padding: 0.7rem 2.2rem;
+      border-radius: 30px;
+      font-weight: bold;
+      box-shadow: 0 2px 12px rgba(102,126,234,0.13);
+    }
+    .features-row {
+      display: flex;
+      justify-content: center;
+      gap: 2.5rem;
+      margin: 2.5rem 0 2rem 0;
+      flex-wrap: wrap;
+    }
+    .feature-box {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 2px 12px rgba(102,126,234,0.08);
+      padding: 1.2rem 1.5rem;
+      min-width: 170px;
+      text-align: center;
+      margin-bottom: 1rem;
+      transition: transform 0.18s, box-shadow 0.18s;
+    }
+    .feature-box:hover {
+      transform: translateY(-4px) scale(1.04);
+      box-shadow: 0 6px 24px rgba(102,126,234,0.16);
+    }
+    .feature-icon {
+      font-size: 2.2rem;
+      color: #667eea;
+      margin-bottom: 0.5rem;
+    }
+    .feature-caption {
+      font-size: 1.08rem;
+      color: #333;
+      font-weight: 500;
+    }
+    .projects-section {
+      margin-top: 1.5rem;
+    }
+    .project-card {
+      border: none;
+      border-radius: 16px;
+      box-shadow: 0 2px 10px rgba(102,126,234,0.08);
+      margin-bottom: 2rem;
+      transition: transform 0.2s, box-shadow 0.2s;
+      background: #fff;
+      min-height: 160px;
+    }
+    .project-card:hover {
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: 0 6px 24px rgba(102,126,234,0.18);
+    }
+    .project-badge {
+      background: #764ba2;
+      color: #fff;
+      border-radius: 50%;
+      width: 38px;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      font-weight: bold;
+      margin-left: 0.7rem;
+    }
+    .project-title {
+      font-size: 1.25rem;
+      font-weight: bold;
+      color: #667eea;
+      margin-bottom: 0.3rem;
+    }
+    .project-desc {
+      color: #444;
+      font-size: 1.05rem;
+      margin-bottom: 0.7rem;
+    }
+    .project-link {
+      font-size: 1rem;
+      font-weight: 500;
+      color: #fff;
+      background: #667eea;
+      border-radius: 20px;
+      padding: 0.4rem 1.2rem;
+      text-decoration: none;
+      transition: background 0.18s;
+    }
+    .project-link:hover {
+      background: #764ba2;
+      color: #fff;
+    }
+    .footer {
+      background: #fff;
+      border-radius: 18px 18px 0 0;
+      box-shadow: 0 -2px 12px rgba(102,126,234,0.07);
+      margin-top: 3rem;
+      padding: 1.2rem 0 0.7rem 0;
+      text-align: center;
+      color: #888;
+      font-size: 1.05rem;
+    }
+    @media (max-width: 768px) {
+      .hero-title { font-size: 2rem; }
+      .features-row { gap: 1.2rem; }
+      .feature-box { min-width: 120px; padding: 1rem 0.7rem; }
+      .projects-section { margin-top: 0.5rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="hero-section">
+    <img src="cic.png" alt="شعار CIC" class="hero-logo" />
+    <div class="hero-title">سلسلة تعليم React للمبتدئين</div>
+    <div class="hero-subtitle">دليلك العملي لتعلم React خطوة بخطوة، من الصفر لحد ما تبني تطبيقات تفاعلية بنفسك!</div>
+    <a href="#projects" class="btn btn-light hero-btn">ابدأ الآن</a>
+  </div>
+
+  <div class="container">
+    <div class="features-row">
+      <div class="feature-box">
+        <i class="fa-solid fa-laptop-code feature-icon"></i>
+        <div class="feature-caption">شرح عملي خطوة بخطوة</div>
+      </div>
+      <div class="feature-box">
+        <i class="fa-solid fa-code feature-icon"></i>
+        <div class="feature-caption">كود جاهز ومرتب</div>
+      </div>
+      <div class="feature-box">
+        <i class="fa-solid fa-language feature-icon"></i>
+        <div class="feature-caption">شرح عملي</div>
+      </div>
+      <div class="feature-box">
+        <i class="fa-solid fa-cubes feature-icon"></i>
+        <div class="feature-caption">مشاريع بسيطة ومتكاملة</div>
+      </div>
+    </div>
+
+    <div class="projects-section" id="projects">
+      <div class="row">
+        <div class="col-md-6 col-lg-4">
+          <div class="project-card p-4 h-100 d-flex flex-column justify-content-between">
+            <div>
+              <span class="project-badge">1</span>
+              <span class="project-title">مشروع 1: Hello React!</span>
+              <div class="project-desc">أول تجربة ليك مع React وJSX، هتتعلم إزاي تعرض محتوى بسيط وتفهم هيكل المشروع.</div>
+            </div>
+            <a href="project1-hello-react.html" class="project-link mt-2">ابدأ المشروع</a>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <div class="project-card p-4 h-100 d-flex flex-column justify-content-between">
+            <div>
+              <span class="project-badge">2</span>
+              <span class="project-title">مشروع 2: Props & Components</span>
+              <div class="project-desc">إزاي تعمل مكونات قابلة لإعادة الاستخدام وتبعت بيانات بينهم باستخدام props.</div>
+            </div>
+            <a href="project2-props-components.html" class="project-link mt-2">ابدأ المشروع</a>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <div class="project-card p-4 h-100 d-flex flex-column justify-content-between">
+            <div>
+              <span class="project-badge">3</span>
+              <span class="project-title">مشروع 3: Dynamic User List</span>
+              <div class="project-desc">هتتعلم تعرض ليستة ديناميكية من الداتا باستخدام map وprops.</div>
+            </div>
+            <a href="project3-dynamic-user-list.html" class="project-link mt-2">ابدأ المشروع</a>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <div class="project-card p-4 h-100 d-flex flex-column justify-content-between">
+            <div>
+              <span class="project-badge">4</span>
+              <span class="project-title">مشروع 4: useState Counter</span>
+              <div class="project-desc">إزاي تستخدم useState وتبني عداد تفاعلي يعد ويقلل ويصفر.</div>
+            </div>
+            <a href="project4-usestate-counter.html" class="project-link mt-2">ابدأ المشروع</a>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <div class="project-card p-4 h-100 d-flex flex-column justify-content-between">
+            <div>
+              <span class="project-badge">5</span>
+              <span class="project-title">مشروع 5: Form Handling</span>
+              <div class="project-desc">إزاي تمسك بيانات من المستخدم وتعرضها وتتحكم في الفورمات.</div>
+            </div>
+            <a href="project5-form-handling.html" class="project-link mt-2">ابدأ المشروع</a>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <div class="project-card p-4 h-100 d-flex flex-column justify-content-between">
+            <div>
+              <span class="project-badge">6</span>
+              <span class="project-title">مشروع 6: Fetching Data with useEffect</span>
+              <div class="project-desc">هتتعلم تجيب بيانات من API وتتعامل مع حالات التحميل والخطأ.</div>
+            </div>
+            <a href="project6-fetching-data-useeffect.html" class="project-link mt-2">ابدأ المشروع</a>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <div class="project-card p-4 h-100 d-flex flex-column justify-content-between">
+            <div>
+              <span class="project-badge">7</span>
+              <span class="project-title">مشروع 7: Conditional Rendering</span>
+              <div class="project-desc">إزاي تعرض عناصر مختلفة حسب حالة الstate وتخلي الواجهة تفاعلية أكتر.</div>
+            </div>
+            <a href="project7-conditional-rendering.html" class="project-link mt-2">ابدأ المشروع</a>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <div class="project-card p-4 h-100 d-flex flex-column justify-content-between">
+            <div>
+              <span class="project-badge">8</span>
+              <span class="project-title">مشروع 8: Todo App</span>
+              <div class="project-desc">إزاي تعمل تطبيق مهام (Todo) بسيط وتضيف وتمسح مهام وتتعامل مع الليستة.</div>
+            </div>
+            <a href="project8-todo-app.html" class="project-link mt-2">ابدأ المشروع</a>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <div class="project-card p-4 h-100 d-flex flex-column justify-content-between">
+            <div>
+              <span class="project-badge">9</span>
+              <span class="project-title">مشروع 9: Component Communication</span>
+              <div class="project-desc">إزاي تبعت دوال وبيانات بين الأب والابن وتخلي المكونات تتفاعل مع بعض.</div>
+            </div>
+            <a href="project9-component-communication.html" class="project-link mt-2">ابدأ المشروع</a>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <div class="project-card p-4 h-100 d-flex flex-column justify-content-between">
+            <div>
+              <span class="project-badge">10</span>
+              <span class="project-title">مشروع 10: React Router Project</span>
+              <div class="project-desc">إزاي تعمل تطبيق فيه أكتر من صفحة وتتنقل بينهم باستخدام react-router-dom.</div>
+            </div>
+            <a href="project10-react-router.html" class="project-link mt-2">ابدأ المشروع</a>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <div class="project-card p-4 h-100 d-flex flex-column justify-content-between">
+            <div>
+              <span class="project-badge">11</span>
+              <span class="project-title">مشروع 11: Theme Toggle App</span>
+              <div class="project-desc">إزاي تبدل بين الوضع الليلي والوضع العادي وتغير شكل التطبيق.</div>
+            </div>
+            <a href="project11-theme-toggle.html" class="project-link mt-2">ابدأ المشروع</a>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <div class="project-card p-4 h-100 d-flex flex-column justify-content-between">
+            <div>
+              <span class="project-badge">12</span>
+              <span class="project-title">مشروع 12: Build & Deploy</span>
+              <div class="project-desc">إزاي تبني تطبيقك للنشر وتنشره على Netlify أو GitHub Pages.</div>
+            </div>
+            <a href="project12-build-deploy.html" class="project-link mt-2">ابدأ المشروع</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer mt-5">
+    <span>جميع الحقوق محفوظة &copy; 2025 - سلسلة تعليم React </span><br/>
+    <span>made by : <a href="https://github.com/Abdelrahman-sadek" target="_blank" style="color:#667eea; text-decoration:underline; font-weight:500;">Abdelrahman Sadek</a></span>
+  </div>
+</body>
+</html> 

@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>مشروع 2: Props & Components</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+  <style>
+    body {
+      font-family: 'Cairo', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+    }
+    
+    .tutorial-container {
+      background: white;
+      border-radius: 15px;
+      margin: 2rem 0;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+    
+    .tutorial-header {
+      background: linear-gradient(45deg, #667eea, #764ba2);
+      color: white;
+      padding: 2rem;
+      border-radius: 15px 15px 0 0;
+      text-align: center;
+    }
+    
+    .tutorial-content {
+      padding: 2rem;
+    }
+    
+    .step-card {
+      background: #f8f9fa;
+      border-left: 4px solid #667eea;
+      padding: 1.5rem;
+      margin: 1rem 0;
+      border-radius: 0 10px 10px 0;
+    }
+    
+    .code-block {
+      background: #2d3748;
+      color: #e2e8f0;
+      padding: 1.5rem;
+      border-radius: 10px;
+      margin: 1rem 0;
+      direction: ltr;
+      text-align: left;
+      overflow-x: auto;
+    }
+    
+    .concept-highlight {
+      background: linear-gradient(45deg, #667eea20, #764ba220);
+      border: 1px solid #667eea;
+      border-radius: 10px;
+      padding: 1.5rem;
+      margin: 1rem 0;
+    }
+    
+    .file-structure {
+      background: #f1f3f4;
+      border-radius: 10px;
+      padding: 1rem;
+      font-family: 'Courier New', monospace;
+      direction: ltr;
+      text-align: left;
+    }
+    
+    .navigation-buttons {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      right: 20px;
+      display: flex;
+      justify-content: space-between;
+      z-index: 1000;
+    }
+    
+    @media (max-width: 768px) {
+      .navigation-buttons {
+        position: relative;
+        margin-top: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="tutorial-container">
+      <!-- Logo -->
+      <div class="text-center pt-4">
+        <img src="cic.png" alt="شعار CIC" style="max-width: 120px; background: #fff; padding: 10px; border-radius: 0; box-shadow: none;" />
+      </div>
+      
+      <!-- Header -->
+      <div class="tutorial-header">
+        <h1 class="display-5 fw-bold mb-3">
+          <i class="fas fa-puzzle-piece"></i>
+          مشروع 2: Props & Components
+        </h1>
+        <p class="lead">تعلم كيفية إنشاء مكونات قابلة لإعادة الاستخدام وتمرير البيانات بينها</p>
+        <div class="row text-center mt-4">
+          <div class="col-md-3">
+            <i class="fas fa-clock fa-2x mb-2"></i>
+            <p>المدة: 45 دقيقة</p>
+          </div>
+          <div class="col-md-3">
+            <i class="fas fa-layer-group fa-2x mb-2"></i>
+            <p>المستوى: مبتدئ</p>
+          </div>
+          <div class="col-md-3">
+            <i class="fas fa-code fa-2x mb-2"></i>
+            <p>الملفات: 4</p>
+          </div>
+          <div class="col-md-3">
+            <i class="fas fa-puzzle-piece fa-2x mb-2"></i>
+            <p>المفاهيم: 3</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="tutorial-content">
+        <!-- What You'll Learn -->
+        <section class="mb-5">
+          <h2 class="text-primary mb-4">
+            <i class="fas fa-graduation-cap"></i>
+            🎯 ماذا ستتعلم في هذا المشروع
+          </h2>
+          <div class="row">
+            <div class="col-md-6">
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                  <i class="fas fa-check text-success me-2"></i>
+                  إنشاء مكونات قابلة لإعادة الاستخدام
+                </li>
+                <li class="list-group-item">
+                  <i class="fas fa-check text-success me-2"></i>
+                  فهم Props وكيفية تمرير البيانات
+                </li>
+                <li class="list-group-item">
+                  <i class="fas fa-check text-success me-2"></i>
+                  استخدام المكونات مع بيانات مختلفة
+                </li>
+              </ul>
+            </div>
+            <div class="col-md-6">
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                  <i class="fas fa-check text-success me-2"></i>
+                  تنظيم الكود بشكل أفضل
+                </li>
+                <li class="list-group-item">
+                  <i class="fas fa-check text-success me-2"></i>
+                  ممارسة إعادة استخدام المكونات
+                </li>
+                <li class="list-group-item">
+                  <i class="fas fa-check text-success me-2"></i>
+                  فهم هيكل المكونات في React
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- Project Setup -->
+        <section class="mb-5">
+          <h2 class="text-primary mb-4">
+            <i class="fas fa-cog"></i>
+            🛠️ إعداد المشروع
+          </h2>
+          
+          <div class="step-card">
+            <h5><i class="fas fa-terminal text-primary"></i> الخطوة 1: إنشاء مشروع React جديد</h5>
+            <p>افتح Terminal أو Command Prompt واكتب الأوامر التالية:</p>
+            <div class="code-block">
+              <pre><code># إنشاء مشروع جديد باستخدام Vite
+npm create vite@latest props-components -- --template react
+
+# الانتقال إلى مجلد المشروع
+cd props-components
+
+# تثبيت المكتبات المطلوبة
+npm install
+
+# تشغيل المشروع
+npm run dev</code></pre>
+            </div>
+            <div class="alert alert-info">
+              <i class="fas fa-info-circle"></i>
+              <strong>ملاحظة:</strong> سنقوم بإنشاء مكونات جديدة في هذا المشروع
+            </div>
+          </div>
+
+          <div class="step-card">
+            <h5><i class="fas fa-folder text-primary"></i> الخطوة 2: فهم هيكل المشروع</h5>
+            <p>سنقوم بإنشاء الملفات التالية:</p>
+            <div class="file-structure">
+              <pre>props-components/
+├── src/
+│   ├── App.jsx          ← المكون الرئيسي
+│   ├── Welcome.jsx      ← مكون جديد سننشئه
+│   ├── main.jsx         ← نقطة البداية
+│   └── index.css
+├── package.json
+└── vite.config.js</pre>
+            </div>
+          </div>
+        </section>
+
+        <!-- Key Concepts -->
+        <section class="mb-5">
+          <h2 class="text-primary mb-4">
+            <i class="fas fa-lightbulb"></i>
+            🧠 المفاهيم الأساسية
+          </h2>
+
+          <div class="concept-highlight">
+            <h5><i class="fas fa-puzzle-piece text-info"></i> ما هي المكونات (Components)؟</h5>
+            <p>المكونات هي قطع من الكود قابلة لإعادة الاستخدام تعيد JSX. يمكن كتابتها كدوال:</p>
+            <div class="code-block">
+              <pre><code>// مكون بسيط
+function Welcome() {
+  return &lt;h1&gt;مرحباً بك في React!&lt;/h1&gt;;
+}
+
+// استخدام المكون
+function App() {
+  return (
+    &lt;div&gt;
+      &lt;Welcome /&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+            </div>
+          </div>
+
+          <div class="concept-highlight">
+            <h5><i class="fas fa-exchange-alt text-warning"></i> ما هي Props؟</h5>
+            <p>Props هي وسيلة لتمرير البيانات من مكون أب إلى مكون فرعي. مثال:</p>
+            <div class="code-block">
+              <pre><code>// مكون يأخذ props
+function Welcome(props) {
+  return &lt;h1&gt;مرحباً، {props.name}!&lt;/h1&gt;;
+}
+
+// تمرير البيانات عبر props
+function App() {
+  return (
+    &lt;div&gt;
+      &lt;Welcome name="أحمد" /&gt;
+      &lt;Welcome name="فاطمة" /&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+            </div>
+            <div class="alert alert-warning">
+              <i class="fas fa-exclamation-triangle"></i>
+              <strong>مهم:</strong> Props تكون للقراءة فقط ولا يمكن تغييرها داخل المكون
+            </div>
+          </div>
+
+          <div class="concept-highlight">
+            <h5><i class="fas fa-recycle text-success"></i> إعادة الاستخدام (Reusability)</h5>
+            <p>المكونات تسمح لك بإعادة استخدام نفس الكود مع بيانات مختلفة:</p>
+            <div class="code-block">
+              <pre><code>// نفس المكون مع بيانات مختلفة
+&lt;Welcome name="أحمد" /&gt;
+&lt;Welcome name="فاطمة" /&gt;
+&lt;Welcome name="عمر" /&gt;
+
+// النتيجة:
+// مرحباً، أحمد!
+// مرحباً، فاطمة!
+// مرحباً، عمر!</code></pre>
+            </div>
+          </div>
+        </section>
+
+        <!-- Step by Step Instructions -->
+        <section class="mb-5">
+          <h2 class="text-primary mb-4">
+            <i class="fas fa-list-ol"></i>
+            ✍️ التطبيق خطوة بخطوة
+          </h2>
+
+          <div class="step-card">
+            <h5>الخطوة 1: إنشاء مكون Welcome.jsx</h5>
+            <p>أنشئ ملف جديد في src/Welcome.jsx واكتب الكود التالي:</p>
+            <div class="code-block">
+              <pre><code>// مكون Welcome يأخذ props
+function Welcome(props) {
+  return &lt;h1&gt;Welcome, {props.name}&lt;/h1&gt;;
+}
+
+// تصدير المكون ليتم استخدامه في ملفات أخرى
+export default Welcome;</code></pre>
+            </div>
+            <div class="alert alert-info">
+              <i class="fas fa-info-circle"></i>
+              <strong>شرح الكود:</strong>
+              <ul class="mb-0 mt-2">
+                <li><code>props</code> هو كائن يحتوي على البيانات المرسلة للمكون</li>
+                <li><code>props.name</code> نصل للقيمة المرسلة باسم "name"</li>
+                <li><code>export default</code> نصدّر المكون ليتم استيراده في ملفات أخرى</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="step-card">
+            <h5>الخطوة 2: تعديل App.jsx</h5>
+            <p>افتح src/App.jsx واستبدل محتواه بالكود التالي:</p>
+            <div class="code-block">
+              <pre><code>import Welcome from './Welcome';
+
+function App() {
+  return (
+    &lt;div&gt;
+      &lt;Welcome name="Fatma" /&gt;
+      &lt;Welcome name="Omar" /&gt;
+      &lt;Welcome name="Sara" /&gt;
+    &lt;/div&gt;
+  );
+}
+
+export default App;</code></pre>
+            </div>
+            <div class="alert alert-success">
+              <i class="fas fa-check-circle"></i>
+              <strong>نقاط مهمة في الكود:</strong>
+              <ul class="mb-0 mt-2">
+                <li><code>import Welcome</code> نستورد المكون من ملفه</li>
+                <li><code>name="Fatma"</code> نمرر البيانات عبر props</li>
+                <li>نستخدم نفس المكون مع بيانات مختلفة</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="step-card">
+            <h5>الخطوة 3: تأكد من main.jsx</h5>
+            <p>تأكد أن ملف src/main.jsx يحتوي على الكود التالي:</p>
+            <div class="code-block">
+              <pre><code>import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App';
+import './index.css';
+
+ReactDOM.createRoot(document.getElementById('root')).render(
+  &lt;React.StrictMode&gt;
+    &lt;App /&gt;
+  &lt;/React.StrictMode&gt;
+);</code></pre>
+            </div>
+          </div>
+        </section>
+
+        <!-- Final Code -->
+        <section class="mb-5">
+          <h2 class="text-primary mb-4">
+            <i class="fas fa-code"></i>
+            🧪 الكود النهائي
+          </h2>
+          
+          <div class="step-card">
+            <h5>src/Welcome.jsx</h5>
+            <div class="code-block">
+              <pre><code>function Welcome(props) {
+  return &lt;h1&gt;Welcome, {props.name}&lt;/h1&gt;;
+}
+
+export default Welcome;</code></pre>
+            </div>
+          </div>
+
+          <div class="step-card">
+            <h5>src/App.jsx</h5>
+            <div class="code-block">
+              <pre><code>import Welcome from './Welcome';
+
+function App() {
+  return (
+    &lt;div&gt;
+      &lt;Welcome name="Fatma" /&gt;
+      &lt;Welcome name="Omar" /&gt;
+      &lt;Welcome name="Sara" /&gt;
+    &lt;/div&gt;
+  );
+}
+
+export default App;</code></pre>
+            </div>
+          </div>
+
+          <div class="step-card">
+            <h5>src/main.jsx</h5>
+            <div class="code-block">
+              <pre><code>import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App';
+import './index.css';
+
+ReactDOM.createRoot(document.getElementById('root')).render(
+  &lt;React.StrictMode&gt;
+    &lt;App /&gt;
+  &lt;/React.StrictMode&gt;
+);</code></pre>
+            </div>
+          </div>
+        </section>
+
+        <!-- Bonus Tips -->
+        <section class="mb-5">
+          <h2 class="text-primary mb-4">
+            <i class="fas fa-star"></i>
+            💬 نصائح إضافية / أفضل الممارسات
+          </h2>
+          
+          <div class="concept-highlight">
+            <ul>
+              <li>استخدم أسماء واضحة للـ props لتسهيل فهم الكود.</li>
+              <li>يمكنك تمرير أي نوع من البيانات عبر props (نصوص، أرقام، مصفوفات، كائنات).</li>
+              <li>استخدم destructuring لاستخراج props: <code>function Welcome({name})</code>.</li>
+              <li>جرب إضافة props جديدة مثل <code>age</code> أو <code>city</code>.</li>
+              <li>حافظ على المكونات بسيطة وقابلة لإعادة الاستخدام.</li>
+            </ul>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navigation Buttons -->
+  <div class="navigation-buttons">
+    <a href="project1-hello-react.html" class="btn btn-outline-primary">
+      <i class="fas fa-arrow-right"></i> المشروع السابق
+    </a>
+    <a href="project3-dynamic-user-list.html" class="btn btn-primary">
+      المشروع التالي <i class="fas fa-arrow-left"></i>
+    </a>
+  </div>
+
+  <!-- Footer -->
+  <div style="background: #fff; border-radius: 18px 18px 0 0; box-shadow: 0 -2px 12px rgba(102,126,234,0.07); margin-top: 3rem; padding: 1.2rem 0 0.7rem 0; text-align: center; color: #888; font-size: 1.05rem;">
+    <span>جميع الحقوق محفوظة &copy; 2025 - سلسلة تعليم React </span><br/>
+    <span>made by : <a href="https://github.com/Abdelrahman-sadek" target="_blank" style="color:#667eea; text-decoration:underline; font-weight:500;">Abdelrahman Sadek</a></span>
+  </div>
+
+  <!-- Prism.js for syntax highlighting -->
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-jsx.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js"></script>
+</body>
+</html> 

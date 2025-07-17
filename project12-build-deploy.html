@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>مشروع 12: Build & Deploy</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+  <style>
+    body { font-family: 'Cairo', sans-serif; background: #f8f9fa; }
+    pre, code { direction: ltr; text-align: left; font-family: 'Fira Mono', monospace; font-size: 1.05em; }
+    pre { background: #2d2d2d; color: #ccc; border-radius: 8px; padding: 1em; margin-bottom: 1.5em; overflow-x: auto; }
+    code { background: none; color: inherit; padding: 0; border-radius: 0; }
+    .section-title { margin-top: 2em; margin-bottom: 1em; font-weight: bold; }
+    .alert { font-size: 1.1em; }
+    .card { margin-bottom: 2em; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+    .card-header { background: #fff; font-weight: bold; font-size: 1.2em; }
+    .tutorial-list li { margin-bottom: 0.5em; }
+    .code-label { font-size: 0.95em; color: #6c757d; margin-bottom: 0.2em; display: block; }
+    .step-num { font-weight: bold; color: #0d6efd; margin-left: 0.5em; }
+  </style>
+</head>
+<body class="container py-4">
+  <div class="text-center mb-4">
+    <img src="cic.png" alt="شعار CIC" style="max-width: 120px; background: #fff; padding: 10px; border-radius: 0; box-shadow: none;" />
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <h1 class="mb-4">📘 مشروع 12: Build & Deploy</h1>
+      <h2 class="section-title">🎯 هتتعلم إيه في المشروع ده؟</h2>
+      <ul class="tutorial-list">
+        <li>إزاي تبني تطبيق React للبرودكشن</li>
+        <li>تجهز ملفات المشروع للنشر</li>
+        <li>تنشر التطبيق على Netlify أو GitHub Pages</li>
+        <li>تحسن أداء التطبيق وتقلل الحجم</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">🛠️ خطوات إعداد المشروع</div>
+    <div class="card-body">
+      <ol>
+        <li><span class="step-num">1</span>اتأكد إن مشروعك شغال كويس وجاهز للنشر.</li>
+        <li><span class="step-num">2</span>افتح التيرمنال في فولدر المشروع واكتب:</li>
+        <span class="code-label">Terminal</span>
+        <pre><code class="language-bash">npm run build</code></pre>
+        <li><span class="step-num">3</span>هتلاقي فولدر جديد اسمه <b>dist</b> فيه ملفات البرودكشن.</li>
+      </ol>
+      <div class="alert alert-info mt-3">💡 ملفات dist هي اللي هتنشرها على أي سيرفر أو خدمة استضافة.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">📂 هيكلية الفولدرات بعد البناء</div>
+    <div class="card-body">
+      <pre><code class="language-bash">my-react-app/
+├── dist/
+│   ├── assets/
+│   ├── index.html
+│   └── ...
+├── src/
+├── package.json
+└── ...
+</code></pre>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">✍️ خطوات النشر على Netlify</div>
+    <div class="card-body">
+      <ol>
+        <li>ادخل على <a href="https://netlify.com" target="_blank">Netlify</a> وسجل حساب.</li>
+        <li>اضغط "Add new site" واختر "Deploy manually".</li>
+        <li>اسحب فولدر <b>dist</b> وحطه في المكان المخصص على Netlify.</li>
+        <li>استنى شوية وهتلاقي لينك لموقعك الجديد!</li>
+      </ol>
+      <div class="alert alert-success">✅ كده تطبيقك بقى أونلاين!</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">✍️ خطوات النشر على GitHub Pages</div>
+    <div class="card-body">
+      <ol>
+        <li>اتأكد إن عندك حساب على GitHub وعملت repository جديد.</li>
+        <li>ثبت أداة gh-pages:</li>
+        <span class="code-label">Terminal</span>
+        <pre><code class="language-bash">npm install --save-dev gh-pages</code></pre>
+        <li>ضيف في package.json:</li>
+        <span class="code-label">package.json</span>
+        <pre><code class="language-json">"homepage": "https://USERNAME.github.io/REPO-NAME"</code></pre>
+        <li>ضيف سكريبتات النشر:</li>
+        <span class="code-label">package.json</span>
+        <pre><code class="language-json">"scripts": {
+  ...
+  "predeploy": "npm run build",
+  "deploy": "gh-pages -d dist"
+}</code></pre>
+        <li>اعمل push للكود على GitHub.</li>
+        <li>شغل الأمر ده للنشر:</li>
+        <span class="code-label">Terminal</span>
+        <pre><code class="language-bash">npm run deploy</code></pre>
+        <li>استنى شوية وهتلاقي موقعك على GitHub Pages!</li>
+      </ol>
+      <div class="alert alert-success">✅ كده تطبيقك بقى أونلاين على GitHub Pages!</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">🧠 المفاهيم الأساسية</div>
+    <div class="card-body">
+      <ul>
+        <li><b>Build:</b> يعني تجهز ملفات التطبيق للنشر (تصغير وتحسين).</li>
+        <li><b>dist:</b> فولدر فيه كل الملفات الجاهزة للنشر.</li>
+        <li><b>Deployment:</b> يعني ترفع التطبيق على الإنترنت.</li>
+        <li><b>Optimization:</b> تصغير الصور والكود عشان السرعة.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card mb-5">
+    <div class="card-header">💬 شوية نصايح / أحسن ممارسات</div>
+    <div class="card-body">
+      <ul>
+        <li>جرب تبني وتنشر أكتر من مرة عشان تتعود على الخطوات.</li>
+        <li>راجع ملفات dist قبل النشر وتأكد إن كل حاجة شغالة.</li>
+        <li>استخدم أدوات زي Lighthouse عشان تقيس أداء الموقع.</li>
+        <li>لو فيه صور أو ملفات كبيرة، حاول تصغرها قبل النشر.</li>
+      </ul>
+    </div>
+  </div>
+  <!-- Prism.js for syntax highlighting -->
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-jsx.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-json.min.js"></script>
+  <div style="background: #fff; border-radius: 18px 18px 0 0; box-shadow: 0 -2px 12px rgba(102,126,234,0.07); margin-top: 3rem; padding: 1.2rem 0 0.7rem 0; text-align: center; color: #888; font-size: 1.05rem;">
+    <span>جميع الحقوق محفوظة &copy; 2025 - سلسلة تعليم React </span><br/>
+    <span>made by : <a href="https://github.com/Abdelrahman-sadek" target="_blank" style="color:#667eea; text-decoration:underline; font-weight:500;">Abdelrahman Sadek</a></span>
+  </div>
+</body>
+</html> 

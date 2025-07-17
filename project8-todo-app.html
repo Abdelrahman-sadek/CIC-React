@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>مشروع 8: Todo App</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+  <style>
+    body { font-family: 'Cairo', sans-serif; background: #f8f9fa; }
+    pre, code { direction: ltr; text-align: left; font-family: 'Fira Mono', monospace; font-size: 1.05em; }
+    pre { background: #2d2d2d; color: #ccc; border-radius: 8px; padding: 1em; margin-bottom: 1.5em; overflow-x: auto; }
+    code { background: none; color: inherit; padding: 0; border-radius: 0; }
+    .section-title { margin-top: 2em; margin-bottom: 1em; font-weight: bold; }
+    .alert { font-size: 1.1em; }
+    .card { margin-bottom: 2em; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+    .card-header { background: #fff; font-weight: bold; font-size: 1.2em; }
+    .tutorial-list li { margin-bottom: 0.5em; }
+    .code-label { font-size: 0.95em; color: #6c757d; margin-bottom: 0.2em; display: block; }
+    .step-num { font-weight: bold; color: #0d6efd; margin-left: 0.5em; }
+  </style>
+</head>
+<body class="container py-4">
+  <div class="text-center mb-4">
+    <img src="cic.png" alt="شعار CIC" style="max-width: 120px; background: #fff; padding: 10px; border-radius: 0; box-shadow: none;" />
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <h1 class="mb-4">📘 مشروع 8: Todo App</h1>
+      <h2 class="section-title">🎯 هتتعلم إيه في المشروع ده؟</h2>
+      <ul class="tutorial-list">
+        <li>إزاي تعمل تطبيق مهام (Todo) بسيط في React</li>
+        <li>تستخدم useState لإدارة الليستة</li>
+        <li>تضيف وتمسح مهام من الليستة</li>
+        <li>تستخدم العرض الشرطي (Conditional Rendering)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">🛠️ خطوات إعداد المشروع</div>
+    <div class="card-body">
+      <ol>
+        <li><span class="step-num">1</span>اعمل مشروع جديد باسم <b>todo-app</b> بنفس الطريقة اللي اتعلمناها:</li>
+        <span class="code-label">Terminal</span>
+        <pre><code class="language-bash">npm create vite@latest todo-app -- --template react</code></pre>
+        <li><span class="step-num">2</span>ادخل على فولدر المشروع وثبت الحاجات المطلوبة:</li>
+        <span class="code-label">Terminal</span>
+        <pre><code class="language-bash">cd todo-app
+npm install
+npm run dev</code></pre>
+      </ol>
+      <div class="alert alert-info mt-3">💡 افتح <b>http://localhost:5173</b> في المتصفح وشوف التطبيق.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">📂 هيكلية الفولدرات</div>
+    <div class="card-body">
+      <pre><code class="language-bash">todo-app/
+├── node_modules/
+├── public/
+├── src/
+│   ├── App.jsx
+│   ├── main.jsx
+│   └── index.css
+├── package.json
+└── vite.config.js
+</code></pre>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">✍️ خطوات الشغل واحدة واحدة</div>
+    <div class="card-body">
+      <ol>
+        <li>افتح <b>src/App.jsx</b> واكتب الكود ده:</li>
+        <span class="code-label">src/App.jsx</span>
+        <pre><code class="language-jsx">import { useState } from 'react';
+
+function App() {
+  const [tasks, setTasks] = useState([]);
+  const [input, setInput] = useState('');
+
+  const addTask = (e) => {
+    e.preventDefault();
+    if (input.trim() === '') return;
+    setTasks([...tasks, { id: Date.now(), text: input }]);
+    setInput('');
+  };
+
+  const deleteTask = (id) => {
+    setTasks(tasks.filter(task => task.id !== id));
+  };
+
+  return (
+    <div>
+      <h1>تطبيق المهام (Todo)</h1>
+      <form onSubmit={addTask} className="mb-3">
+        <input
+          type="text"
+          value={input}
+          onChange={e => setInput(e.target.value)}
+          placeholder="اكتب مهمة جديدة"
+        />
+        <button type="submit">أضف</button>
+      </form>
+      {tasks.length === 0 ? (
+        <div className="alert alert-warning">مفيش مهام دلوقتي، ابدأ ضيف!</div>
+      ) : (
+        <ul>
+          {tasks.map(task => (
+            <li key={task.id} className="d-flex align-items-center justify-content-between mb-2">
+              <span>{task.text}</span>
+              <button className="btn btn-danger btn-sm" onClick={() => deleteTask(task.id)}>مسح</button>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}
+
+export default App;
+</code></pre>
+        <div class="alert alert-primary">📌 هنا استخدمنا useState عشان نخزن الليستة ونتعامل مع الإضافة والمسح، وكمان استخدمنا العرض الشرطي لو مفيش مهام.</div>
+        <li>تأكد إن <b>src/main.jsx</b> زي المشاريع اللي فاتت.</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">🧠 المفاهيم الأساسية</div>
+    <div class="card-body">
+      <ul>
+        <li><b>useState:</b> لإدارة حالة الليستة والقيم المدخلة.</li>
+        <li><b>Array methods:</b> زي map وfilter عشان تضيف وتمسح من الليستة.</li>
+        <li><b>Conditional Rendering:</b> تعرض رسالة أو ليستة حسب الحالة.</li>
+        <li><b>keys:</b> لازم كل عنصر في الليستة يكون ليه key فريد.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">🧪 الكود النهائي</div>
+    <div class="card-body">
+      <div class="alert alert-success">✅ الكود النهائي للمشروع:</div>
+      <span class="code-label">src/App.jsx</span>
+      <pre><code class="language-jsx">import { useState } from 'react';
+
+function App() {
+  const [tasks, setTasks] = useState([]);
+  const [input, setInput] = useState('');
+
+  const addTask = (e) => {
+    e.preventDefault();
+    if (input.trim() === '') return;
+    setTasks([...tasks, { id: Date.now(), text: input }]);
+    setInput('');
+  };
+
+  const deleteTask = (id) => {
+    setTasks(tasks.filter(task => task.id !== id));
+  };
+
+  return (
+    <div>
+      <h1>تطبيق المهام (Todo)</h1>
+      <form onSubmit={addTask} className="mb-3">
+        <input
+          type="text"
+          value={input}
+          onChange={e => setInput(e.target.value)}
+          placeholder="اكتب مهمة جديدة"
+        />
+        <button type="submit">أضف</button>
+      </form>
+      {tasks.length === 0 ? (
+        <div className="alert alert-warning">مفيش مهام دلوقتي، ابدأ ضيف!</div>
+      ) : (
+        <ul>
+          {tasks.map(task => (
+            <li key={task.id} className="d-flex align-items-center justify-content-between mb-2">
+              <span>{task.text}</span>
+              <button className="btn btn-danger btn-sm" onClick={() => deleteTask(task.id)}>مسح</button>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}
+export default App;
+</code></pre>
+      <span class="code-label">src/main.jsx</span>
+      <pre><code class="language-jsx">import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App';
+import './index.css';
+
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
+</code></pre>
+    </div>
+  </div>
+
+  <div class="card mb-5">
+    <div class="card-header">💬 شوية نصايح / أحسن ممارسات</div>
+    <div class="card-body">
+      <ul>
+        <li>جرب تضيف خاصية إنك تعلم المهمة إنها خلصت (مثلاً بعلامة صح).</li>
+        <li>خلي كل مهمة ليها id فريد (زي Date.now()).</li>
+        <li>نضف الكود وخلي كل حاجة واضحة وسهلة.</li>
+        <li>جرب تضيف أكتر من input أو خاصية للمهمة.</li>
+      </ul>
+    </div>
+  </div>
+  <!-- Prism.js for syntax highlighting -->
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-jsx.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js"></script>
+  <div style="background: #fff; border-radius: 18px 18px 0 0; box-shadow: 0 -2px 12px rgba(102,126,234,0.07); margin-top: 3rem; padding: 1.2rem 0 0.7rem 0; text-align: center; color: #888; font-size: 1.05rem;">
+    <span>جميع الحقوق محفوظة &copy; 2025 - سلسلة تعليم React </span><br/>
+    <span>made by : <a href="https://github.com/Abdelrahman-sadek" target="_blank" style="color:#667eea; text-decoration:underline; font-weight:500;">Abdelrahman Sadek</a></span>
+  </div>
+</body>
+</html> 
