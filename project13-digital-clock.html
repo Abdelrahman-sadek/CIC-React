@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>مشروع 13: الساعة الرقمية (Digital Clock)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+  <style>
+    body { font-family: 'Cairo', sans-serif; background: #f8f9fa; }
+    pre, code { direction: ltr; text-align: left; font-family: 'Fira Mono', monospace; font-size: 1.05em; }
+    pre { background: #2d2d2d; color: #ccc; border-radius: 8px; padding: 1em; margin-bottom: 1.5em; overflow-x: auto; }
+    code { background: none; color: inherit; padding: 0; border-radius: 0; }
+    .section-title { margin-top: 2em; margin-bottom: 1em; font-weight: bold; }
+    .alert { font-size: 1.1em; }
+    .card { margin-bottom: 2em; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+    .card-header { background: #fff; font-weight: bold; font-size: 1.2em; }
+    .tutorial-list li { margin-bottom: 0.5em; }
+    .code-label { font-size: 0.95em; color: #6c757d; margin-bottom: 0.2em; display: block; }
+    .step-num { font-weight: bold; color: #0d6efd; margin-left: 0.5em; }
+  </style>
+</head>
+<body class="container py-4">
+  <div class="text-center mb-4">
+    <img src="cic.png" alt="شعار CIC" style="max-width: 120px; background: #fff; padding: 10px; border-radius: 0; box-shadow: none;" />
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <h1 class="mb-4">⏰ مشروع 13: الساعة الرقمية (Digital Clock)</h1>
+      <h2 class="section-title">🎯 هتتعلم إيه في المشروع ده؟</h2>
+      <ul class="tutorial-list">
+        <li>فهم أعمق للـ state والـ lifecycle في React.</li>
+        <li>الاستخدام المتقدم لـ `useState` و `useEffect` hooks.</li>
+        <li>كيفية التعامل مع المؤقتات الزمنية (`setInterval`) وتنظيفها لتجنب تسرب الذاكرة.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">🔧 التقنيات والمفاهيم المستخدمة</div>
+    <div class="card-body">
+      <ul>
+        <li>React functional components</li>
+        <li>`useState` hook لإدارة الحالة.</li>
+        <li>`useEffect` hook لإدارة الـ side effects (مثل المؤقتات الزمنية).</li>
+        <li>JavaScript `Date` object لتنسيق الوقت.</li>
+        <li>تنظيف الـ `useEffect` (Cleanup function).</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">📂 هيكلية الفولدرات</div>
+    <div class="card-body">
+      <pre><code class="language-bash">digital-clock/
+├── node_modules/
+├── public/
+├── src/
+│   ├── App.jsx
+│   ├── DigitalClock.jsx
+│   ├── main.jsx
+│   └── index.css
+├── package.json
+└── vite.config.js
+</code></pre>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">🧩 شرح الكود خطوة بخطوة</div>
+    <div class="card-body">
+      <ol>
+        <li><b>DigitalClock.jsx</b>
+          <ul>
+            <li>`const [time, setTime] = useState(new Date());`<br>
+            هنا نستخدم `useState` لإنشاء متغير حالة اسمه `time` وقيمته الأولية هي الوقت الحالي باستخدام `new Date()`. الدالة `setTime` هي التي سنستخدمها لتحديث قيمة `time`.</li>
+            <li>`useEffect(() => { ... }, []);`<br>
+            هذا الـ hook يسمح لنا بتنفيذ "side effects" في المكون. الكود بداخله سيعمل بعد أن يتم عرض المكون على الشاشة.</li>
+            <li>`const timerId = setInterval(() => setTime(new Date()), 1000);`<br>
+            نستخدم `setInterval` لتنفيذ دالة كل 1000 ميللي ثانية (كل ثانية). هذه الدالة تستدعي `setTime(new Date())` لتحديث حالة الوقت، مما يؤدي إلى إعادة عرض المكون بالوقت الجديد.</li>
+            <li>`return () => clearInterval(timerId);`<br>
+            هذه هي دالة التنظيف (cleanup function). سيتم استدعاؤها عندما يتم إزالة المكون من الشاشة (unmount). هذا مهم جداً لإيقاف المؤقت الزمني ومنع تسرب الذاكرة (memory leaks) وتشغيل المؤقت في الخلفية بدون داعي.</li>
+          </ul>
+        </li>
+        <li><b>App.jsx</b>
+          <ul>
+            <li>ببساطة نستورد مكون `DigitalClock` ونعرضه. هذا يوضح كيفية دمج المكونات معاً.</li>
+          </ul>
+        </li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">📘 أخطاء شائعة وحلولها</div>
+    <div class="card-body">
+      <ul>
+        <li><b>عدم تنظيف المؤقت الزمني</b>: إذا نسيت دالة التنظيف `clearInterval`، سيستمر المؤقت في العمل حتى لو تم إغلاق المكون، مما يؤدي إلى استهلاك موارد الجهاز وقد يسبب أخطاء في التطبيقات الأكبر.</li>
+        <li><b>تنسيق الوقت</b>: قد تحتاج إلى استخدام دوال إضافية مثل `toLocaleTimeString()` لتنسيق عرض الوقت بشكل مناسب للمستخدم.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">📌 نصائح إضافية / استخدام عملي</div>
+    <div class="card-body">
+      <ul>
+        <li><b>إضافة التاريخ</b>: جرب إضافة `useState` جديد لعرض التاريخ بجانب الوقت.</li>
+        <li><b>توقيتات عالمية</b>: يمكن تعديل المشروع لعرض ساعات لمدن مختلفة باستخدام `Intl.DateTimeFormat`.</li>
+        <li><b>تغيير الألوان</b>: يمكن ربط لون الساعة بالوقت، مثلاً يتغير اللون في الصباح والمساء.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">الملخص</div>
+    <div class="card-body">
+      <ul>
+        <li>في المشروع ده، عملنا ساعة رقمية بسيطة بتحدث نفسها كل ثانية. أهم حاجة نتعلمها هي إزاي نستخدم `useEffect` عشان نعمل حاجة كل فترة معينة (زي تحديث الوقت)، وإزاي لازم "ننضف" المؤقت ده بعدها عشان منعملش مشاكل في أداء التطبيق.</li>
+      </ul>
+    </div>
+  </div>
+  <!-- Prism.js for syntax highlighting -->
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-jsx.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-json.min.js"></script>
+  <div style="background: #fff; border-radius: 18px 18px 0 0; box-shadow: 0 -2px 12px rgba(102,126,234,0.07); margin-top: 3rem; padding: 1.2rem 0 0.7rem 0; text-align: center; color: #888; font-size: 1.05rem;">
+    <span>جميع الحقوق محفوظة &copy; 2025 - سلسلة تعليم React </span><br>
+    <span>made by : <a href="https://github.com/Abdelrahman-sadek" target="_blank" style="color:#667eea; text-decoration:underline; font-weight:500;">Abdelrahman Sadek</a></span>
+  </div>
+</body>
+</html>

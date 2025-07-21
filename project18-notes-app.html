@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>مشروع 18: تطبيق الملاحظات (Notes App)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+  <style>
+    body { font-family: 'Cairo', sans-serif; background: #f8f9fa; }
+    pre, code { direction: ltr; text-align: left; font-family: 'Fira Mono', monospace; font-size: 1.05em; }
+    pre { background: #2d2d2d; color: #ccc; border-radius: 8px; padding: 1em; margin-bottom: 1.5em; overflow-x: auto; }
+    code { background: none; color: inherit; padding: 0; border-radius: 0; }
+    .section-title { margin-top: 2em; margin-bottom: 1em; font-weight: bold; }
+    .alert { font-size: 1.1em; }
+    .card { margin-bottom: 2em; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+    .card-header { background: #fff; font-weight: bold; font-size: 1.2em; }
+    .tutorial-list li { margin-bottom: 0.5em; }
+    .code-label { font-size: 0.95em; color: #6c757d; margin-bottom: 0.2em; display: block; }
+    .step-num { font-weight: bold; color: #0d6efd; margin-left: 0.5em; }
+  </style>
+</head>
+<body class="container py-4">
+  <div class="text-center mb-4">
+    <img src="cic.png" alt="شعار CIC" style="max-width: 120px; background: #fff; padding: 10px; border-radius: 0; box-shadow: none;" />
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <h1 class="mb-4">📝 مشروع 18: تطبيق الملاحظات (Notes App)</h1>
+      <h2 class="section-title">🎯 هتتعلم إيه في المشروع ده؟</h2>
+      <ul class="tutorial-list">
+        <li>بناء تطبيق CRUD بسيط (إضافة، تعديل، حذف) باستخدام React.</li>
+        <li>تخزين البيانات محليًا في المتصفح باستخدام localStorage.</li>
+        <li>إدارة أكثر من حالة (state) في نفس المكون.</li>
+        <li>تطبيق منطق التعديل (edit-in-place) للملاحظات.</li>
+        <li>استخدام useEffect لمزامنة البيانات مع localStorage.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">🔧 التقنيات والمفاهيم المستخدمة</div>
+    <div class="card-body">
+      <ul>
+        <li>React functional components</li>
+        <li>useState لإدارة الملاحظات، النص المدخل، وحالة التعديل.</li>
+        <li>useEffect لمزامنة البيانات مع localStorage عند كل تغيير.</li>
+        <li>التعامل مع الأحداث (onChange, onClick, onKeyDown).</li>
+        <li>العرض الشرطي (Conditional Rendering) بين وضع الإضافة ووضع التعديل.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">📂 هيكلية الفولدرات</div>
+    <div class="card-body">
+      <pre><code class="language-bash">notes-app/
+├── node_modules/
+├── public/
+├── src/
+│   ├── App.jsx
+│   ├── NotesApp.jsx
+│   ├── main.jsx
+│   └── index.css
+├── package.json
+└── vite.config.js
+</code></pre>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">🧩 شرح الكود خطوة بخطوة</div>
+    <div class="card-body">
+      <ol>
+        <li><b>NotesApp.jsx</b>
+          <ul>
+            <li><b>useState</b>:
+              <ul>
+                <li><code>notes</code>: مصفوفة الملاحظات (كل ملاحظة كائن فيه id, text).</li>
+                <li><code>input</code>: نص الملاحظة الجديدة أو المعدلة.</li>
+                <li><code>editId</code>: id الملاحظة التي يتم تعديلها حاليًا (أو null إذا لم يكن هناك تعديل).</li>
+              </ul>
+            </li>
+            <li><b>useEffect</b>:
+              <ul>
+                <li>عند تحميل التطبيق لأول مرة، يتم قراءة الملاحظات من localStorage (إن وجدت).</li>
+                <li>عند كل تغيير في notes، يتم حفظها تلقائيًا في localStorage.</li>
+              </ul>
+            </li>
+            <li><b>addNote</b>: دالة لإضافة ملاحظة جديدة. تتحقق من أن النص غير فارغ، ثم تضيف الملاحظة وتعيد تعيين input.</li>
+            <li><b>deleteNote</b>: دالة لحذف ملاحظة من القائمة.</li>
+            <li><b>startEdit</b>: عند الضغط على زر "تعديل"، يتم تعيين editId وقيمة input إلى نص الملاحظة المختارة.</li>
+            <li><b>saveEdit</b>: عند الحفظ، يتم تحديث نص الملاحظة في المصفوفة، ثم إعادة تعيين editId وinput.</li>
+            <li><b>العرض</b>: يتم عرض قائمة الملاحظات مع أزرار "تعديل" و"حذف" لكل ملاحظة. إذا كان هناك تعديل، يظهر زر "حفظ" بدل "إضافة".</li>
+            <li><b>إضافة أو تعديل بالضغط على Enter</b>: يمكن إضافة أو حفظ الملاحظة بالضغط على Enter في حقل الإدخال.</li>
+          </ul>
+        </li>
+        <li><b>App.jsx</b>
+          <ul>
+            <li>استيراد وعرض مكون <code>NotesApp</code> في التطبيق الرئيسي.</li>
+          </ul>
+        </li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">📘 أخطاء شائعة وحلولها</div>
+    <div class="card-body">
+      <ul>
+        <li><b>نسيان مزامنة localStorage</b>: إذا لم تستخدم useEffect بشكل صحيح، قد لا يتم حفظ أو استرجاع الملاحظات عند إعادة تحميل الصفحة.</li>
+        <li><b>نسيان إعادة تعيين حالة التعديل</b>: بعد حفظ التعديل، يجب إعادة تعيين editId وinput حتى لا يبقى التطبيق في وضع التعديل.</li>
+        <li><b>إضافة ملاحظات فارغة</b>: يجب التأكد من أن النص المدخل غير فارغ قبل الإضافة أو الحفظ.</li>
+        <li><b>تكرار id</b>: استخدم Date.now() أو مكتبة uuid لضمان أن كل ملاحظة لها id فريد.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">📌 نصائح إضافية / استخدام عملي</div>
+    <div class="card-body">
+      <ul>
+        <li><b>البحث في الملاحظات</b>: أضف حقل بحث لتصفية الملاحظات حسب النص.</li>
+        <li><b>تصنيف الملاحظات</b>: أضف خاصية التصنيف (tags) أو الألوان لكل ملاحظة.</li>
+        <li><b>تأكيد الحذف</b>: أضف نافذة تأكيد قبل حذف الملاحظة.</li>
+        <li><b>تحسين الواجهة</b>: استخدم ألوان أو أيقونات لتمييز الملاحظات المهمة.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">الملخص</div>
+    <div class="card-body">
+      <ul>
+        <li>في المشروع ده، اتعلمت إزاي تدير ملاحظات وتعدلها وتحذفها، وكل حاجة بتتحفظ تلقائي في المتصفح. أهم حاجة هي منطق التعديل ومزامنة البيانات مع localStorage. جرب تضيف بحث أو تصنيف عشان تطور التطبيق أكتر.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Prism.js for syntax highlighting -->
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-jsx.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-json.min.js"></script>
+  <div style="background: #fff; border-radius: 18px 18px 0 0; box-shadow: 0 -2px 12px rgba(102,126,234,0.07); margin-top: 3rem; padding: 1.2rem 0 0.7rem 0; text-align: center; color: #888; font-size: 1.05rem;">
+    <span>جميع الحقوق محفوظة &copy; 2025 - سلسلة تعليم React </span><br/>
+    <span>made by : <a href="https://github.com/Abdelrahman-sadek" target="_blank" style="color:#667eea; text-decoration:underline; font-weight:500;">Abdelrahman Sadek</a></span>
+  </div>
+</body>
+</html> 

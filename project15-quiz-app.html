@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>مشروع 15: تطبيق الاختبار (Quiz App)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+  <style>
+    body { font-family: 'Cairo', sans-serif; background: #f8f9fa; }
+    pre, code { direction: ltr; text-align: left; font-family: 'Fira Mono', monospace; font-size: 1.05em; }
+    pre { background: #2d2d2d; color: #ccc; border-radius: 8px; padding: 1em; margin-bottom: 1.5em; overflow-x: auto; }
+    code { background: none; color: inherit; padding: 0; border-radius: 0; }
+    .section-title { margin-top: 2em; margin-bottom: 1em; font-weight: bold; }
+    .alert { font-size: 1.1em; }
+    .card { margin-bottom: 2em; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+    .card-header { background: #fff; font-weight: bold; font-size: 1.2em; }
+    .tutorial-list li { margin-bottom: 0.5em; }
+    .code-label { font-size: 0.95em; color: #6c757d; margin-bottom: 0.2em; display: block; }
+    .step-num { font-weight: bold; color: #0d6efd; margin-left: 0.5em; }
+  </style>
+</head>
+<body class="container py-4">
+  <div class="text-center mb-4">
+    <img src="cic.png" alt="شعار CIC" style="max-width: 120px; background: #fff; padding: 10px; border-radius: 0; box-shadow: none;" />
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <h1 class="mb-4">🧠 مشروع 15: تطبيق الاختبار (Quiz App)</h1>
+      <h2 class="section-title">🎯 هتتعلم إيه في المشروع ده؟</h2>
+      <ul class="tutorial-list">
+        <li>بناء تطبيق تفاعلي يعتمد على مدخلات المستخدم.</li>
+        <li>إدارة حالة التطبيق المعقدة (السؤال الحالي، الدرجات، الإجابات).</li>
+        <li>التعامل مع مصفوفات البيانات وعرضها ديناميكيًا باستخدام `map`.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">🔧 التقنيات والمفاهيم المستخدمة</div>
+    <div class="card-body">
+      <ul>
+        <li>`useState` لإدارة حالة السؤال الحالي، والدرجة، وإظهار النتيجة.</li>
+        <li>التعامل مع مصفوفة من الكائنات (Array of Objects) لتخزين الأسئلة.</li>
+        <li>العرض الشرطي (Conditional Rendering) لإظهار شاشة الاختبار أو شاشة النتيجة.</li>
+        <li>استخدام `map` لعرض خيارات الإجابة ديناميكيًا.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">📂 هيكلية الفولدرات</div>
+    <div class="card-body">
+      <pre><code class="language-bash">quiz-app/
+├── node_modules/
+├── public/
+├── src/
+│   ├── App.jsx
+│   ├── QuizApp.jsx
+│   ├── main.jsx
+│   └── index.css
+├── package.json
+└── vite.config.js
+</code></pre>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">🧩 شرح الكود خطوة بخطوة</div>
+    <div class="card-body">
+      <ol>
+        <li><b>QuizApp.jsx</b>
+          <ul>
+            <li>`const questions = [...]`: مصفوفة بسيطة لتخزين بيانات الاختبار. في تطبيق حقيقي، قد تأتي هذه البيانات من API.</li>
+            <li>`const [current, setCurrent] = useState(0);`: حالة لتتبع رقم السؤال الحالي الذي يتم عرضه.</li>
+            <li>`const [score, setScore] = useState(0);`: حالة لتجميع درجات المستخدم.</li>
+            <li>`const [showResult, setShowResult] = useState(false);`: حالة للتحكم في عرض شاشة النتيجة النهائية.</li>
+            <li>`const handleAnswer = (option) => { ... }`: هذه الدالة هي قلب التطبيق. عند اختيار إجابة، تتحقق مما إذا كانت صحيحة وتزيد الدرجة. ثم تتحقق مما إذا كان هناك المزيد من الأسئلة، فتقوم بتحديث `current` للانتقال للسؤال التالي، أو تقوم بتحديث `showResult` لإنهاء الاختبار.</li>
+            <li>`{showResult ? ... : ...}`: هذا مثال على العرض الشرطي. إذا كانت `showResult` قيمتها `true`، نعرض النتيجة. وإلا، نعرض السؤال الحالي.</li>
+          </ul>
+        </li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">📘 أخطاء شائعة وحلولها</div>
+    <div class="card-body">
+      <ul>
+        <li><b>منطق تحديث الحالة</b>: قد تحدث أخطاء إذا لم يتم تحديث حالة السؤال الحالي أو الدرجات بشكل صحيح، مما يؤدي إلى تخطي أسئلة أو حسابات خاطئة.</li>
+        <li><b>Key Prop</b>: عند استخدام `map` لعرض قائمة (مثل خيارات الإجابة)، لا تنسَ إضافة `key` فريد لكل عنصر لتحسين أداء React.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">📌 نصائح إضافية / استخدام عملي</div>
+    <div class="card-body">
+      <ul>
+        <li><b>أسئلة عشوائية</b>: يمكنك خلط ترتيب الأسئلة في كل مرة يبدأ فيها الاختبار باستخدام خوارزمية خلط بسيطة (مثل Fisher-Yates shuffle) عند تحميل المكون.</li>
+        <li><b>مؤقت زمني</b>: أضف `useEffect` و `useState` لتتبع الوقت المتبقي لكل سؤال أو للاختبار بأكمله.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">الملخص</div>
+    <div class="card-body">
+      <ul>
+        <li>هنا بنعمل اختبار بسيط. الفكرة كلها في إدارة الحالة: بنعرف إحنا في أنهي سؤال، والدرجة كام، وإذا كان الاختبار خلص ولا لأ. بنستخدم `map` عشان نعرض الاختيارات بدل ما نكتبها كلها بإيدينا. أهم جزء هو الدالة اللي بتشتغل لما بتختار إجابة، عشان هي اللي بتصلح الإجابة وتنقلنا للسؤال اللي بعده.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Prism.js for syntax highlighting -->
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-jsx.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-json.min.js"></script>
+  <div style="background: #fff; border-radius: 18px 18px 0 0; box-shadow: 0 -2px 12px rgba(102,126,234,0.07); margin-top: 3rem; padding: 1.2rem 0 0.7rem 0; text-align: center; color: #888; font-size: 1.05rem;">
+    <span>جميع الحقوق محفوظة &copy; 2025 - سلسلة تعليم React </span><br>
+    <span>made by : <a href="https://github.com/Abdelrahman-sadek" target="_blank" style="color:#667eea; text-decoration:underline; font-weight:500;">Abdelrahman Sadek</a></span>
+  </div>
+</body>
+</html> 

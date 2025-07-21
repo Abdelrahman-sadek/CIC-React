@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>مشروع 21: قارئ مدونة بسيط (Simple Blog Reader)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+  <style>
+    body { font-family: 'Cairo', sans-serif; background: #f8f9fa; }
+    pre, code { direction: ltr; text-align: left; font-family: 'Fira Mono', monospace; font-size: 1.05em; }
+    pre { background: #2d2d2d; color: #ccc; border-radius: 8px; padding: 1em; margin-bottom: 1.5em; overflow-x: auto; }
+    code { background: none; color: inherit; padding: 0; border-radius: 0; }
+    .section-title { margin-top: 2em; margin-bottom: 1em; font-weight: bold; }
+    .alert { font-size: 1.1em; }
+    .card { margin-bottom: 2em; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+    .card-header { background: #fff; font-weight: bold; font-size: 1.2em; }
+    .tutorial-list li { margin-bottom: 0.5em; }
+    .code-label { font-size: 0.95em; color: #6c757d; margin-bottom: 0.2em; display: block; }
+    .step-num { font-weight: bold; color: #0d6efd; margin-left: 0.5em; }
+  </style>
+</head>
+<body class="container py-4">
+  <div class="text-center mb-4">
+    <img src="cic.png" alt="شعار CIC" style="max-width: 120px; background: #fff; padding: 10px; border-radius: 0; box-shadow: none;" />
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <h1 class="mb-4">📖 مشروع 21: قارئ مدونة بسيط (Simple Blog Reader)</h1>
+      <h2 class="section-title">🎯 هتتعلم إيه في المشروع ده؟</h2>
+      <ul class="tutorial-list">
+        <li>إتقان جلب البيانات غير المتزامنة من واجهة برمجة تطبيقات REST عامة.</li>
+        <li>إدارة حالات التحميل (loading) والخطأ (error) والبيانات (data) بفعالية باستخدام hooks.</li>
+        <li>تنفيذ واجهة مستخدم بنمط "master-detail" للتنقل بين القوائم وعرض التفاصيل.</li>
+        <li>استخدام `useEffect` لإجراء طلبات الشبكة مرة واحدة عند تحميل المكون.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">🔧 التقنيات والمفاهيم المستخدمة</div>
+    <div class="card-body">
+      <ul>
+        <li>React functional components</li>
+        <li>`useState` لإدارة المقالات، المقال المختار، وحالات التحميل والخطأ.</li>
+        <li>`useEffect` لتنفيذ طلبات الشبكة (side effects).</li>
+        <li>JavaScript غير المتزامن مع `fetch` والـ Promises (`.then()`, `.catch()`).</li>
+        <li>نمط واجهة المستخدم Master-Detail.</li>
+        <li>العرض الشرطي (Conditional Rendering) بناءً على حالة التحميل والخطأ.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">📂 هيكلية الفولدرات</div>
+    <div class="card-body">
+      <pre><code class="language-bash">blog-reader/
+├── node_modules/
+├── public/
+├── src/
+│   ├── App.jsx
+│   ├── BlogReader.jsx
+│   ├── main.jsx
+│   └── index.css
+├── package.json
+└── vite.config.js
+</code></pre>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">🧩 شرح الكود خطوة بخطوة</div>
+    <div class="card-body">
+      <ol>
+        <li><b>BlogReader.jsx</b>
+          <ul>
+            <li><b>useState</b>:
+              <ul>
+                <li><code>posts</code>: لتخزين قائمة المقالات القادمة من الـ API.</li>
+                <li><code>selected</code>: لتخزين المقال الذي يختاره المستخدم لعرض تفاصيله.</li>
+                <li><code>loading</code>: حالة منطقية (boolean) لتتبع ما إذا كان طلب البيانات لا يزال قيد التنفيذ.</li>
+                <li><code>error</code>: لتخزين أي رسالة خطأ قد تحدث.</li>
+              </ul>
+            </li>
+            <li><b>useEffect</b>:
+              <ul>
+                <li>الكود داخل `useEffect` يعمل مرة واحدة فقط بعد تحميل المكون، بفضل مصفوفة الاعتماديات الفارغة `[]`.</li>
+                <li>يتم استخدام `fetch` لإرسال طلب إلى الـ API.</li>
+                <li>يتم التعامل مع الاستجابة باستخدام `.then()` لتحويلها إلى JSON، ثم `.then()` أخرى لتحديث حالة `posts` وتعطيل `loading`.</li>
+                <li>يتم استخدام `.catch()` لالتقاط أي أخطاء في الشبكة وتحديث حالة `error`.</li>
+              </ul>
+            </li>
+            <li><b>العرض الشرطي</b>:
+              <ul>
+                <li>أولاً، يتم التحقق من حالة `loading` و`error` لعرض رسائل مناسبة للمستخدم.</li>
+                <li>بعد ذلك، يتم التحقق من `selected`. إذا كانت قيمته `null`، يتم عرض قائمة المقالات. إذا كان يحتوي على مقال، يتم عرض تفاصيل ذلك المقال.</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li><b>App.jsx</b>
+          <ul>
+            <li>استيراد وعرض مكون <code>BlogReader</code> في التطبيق الرئيسي.</li>
+          </ul>
+        </li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">📘 أخطاء شائعة وحلولها</div>
+    <div class="card-body">
+      <ul>
+        <li><b>حلقات لا نهائية في useEffect</b>: إذا نسيت مصفوفة الاعتماديات الفارغة `[]`، سيتم استدعاء `fetch` بعد كل إعادة عرض، مما يؤدي إلى حلقة لا نهائية من طلبات الشبكة.</li>
+        <li><b>عدم التعامل مع حالات التحميل والخطأ</b>: قد يؤدي ذلك إلى تعطل التطبيق أو عرض صفحة فارغة إذا استغرق الـ API وقتًا طويلاً للرد أو فشل الطلب.</li>
+        <li><b>مشاكل CORS</b>: قد تحدث إذا كان الـ API لا يسمح بالطلبات من نطاقك. (هذا ليس مشكلة مع JSONPlaceholder).</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">📌 نصائح إضافية / استخدام عملي</div>
+    <div class="card-body">
+      <ul>
+        <li><b>ترقيم الصفحات (Pagination)</b>: يمكنك جلب عدد محدود من المقالات في كل مرة (مثلاً 10) وإضافة أزرار "التالي" و"السابق" لجلب المزيد.</li>
+        <li><b>عرض معلومات الكاتب</b>: يمكنك إجراء طلب API آخر إلى `/users/:userId` لجلب وعرض معلومات كاتب كل مقال.</li>
+        <li><b>فصل المكونات</b>: للحصول على كود أكثر تنظيمًا، يمكنك فصل قائمة المقالات (`PostList`) وتفاصيل المقال (`PostDetail`) في مكونات منفصلة.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">الملخص</div>
+    <div class="card-body">
+      <ul>
+        <li>المشروع ده خطوة مهمة جداً في عالم التطبيقات الديناميكية. إنت مبقتش بتتعامل مع بيانات ثابتة، إنت بتجيب معلومات لايف من النت. الدرس الأساسي هو إنك تدير دورة حياة طلب البيانات: تظهر علامة تحميل، تعرض البيانات لما توصل، وتتعامل مع أي أخطاء ممكن تحصل. إتقان النمط ده أساسي لبناء أي تطبيق ويب حديث.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Prism.js for syntax highlighting -->
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-jsx.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-json.min.js"></script>
+  <div style="background: #fff; border-radius: 18px 18px 0 0; box-shadow: 0 -2px 12px rgba(102,126,234,0.07); margin-top: 3rem; padding: 1.2rem 0 0.7rem 0; text-align: center; color: #888; font-size: 1.05rem;">
+    <span>جميع الحقوق محفوظة &copy; 2025 - سلسلة تعليم React </span><br/>
+    <span>made by : <a href="https://github.com/Abdelrahman-sadek" target="_blank" style="color:#667eea; text-decoration:underline; font-weight:500;">Abdelrahman Sadek</a></span>
+  </div>
+</body>
+</html> 

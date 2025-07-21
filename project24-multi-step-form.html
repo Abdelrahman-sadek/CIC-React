@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>مشروع 24: نموذج متعدد الخطوات مع التحقق (Multi-step Form with Validation)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+  <style>
+    body { font-family: 'Cairo', sans-serif; background: #f8f9fa; }
+    pre, code { direction: ltr; text-align: left; font-family: 'Fira Mono', monospace; font-size: 1.05em; }
+    pre { background: #2d2d2d; color: #ccc; border-radius: 8px; padding: 1em; margin-bottom: 1.5em; overflow-x: auto; }
+    code { background: none; color: inherit; padding: 0; border-radius: 0; }
+    .section-title { margin-top: 2em; margin-bottom: 1em; font-weight: bold; }
+    .alert { font-size: 1.1em; }
+    .card { margin-bottom: 2em; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+    .card-header { background: #fff; font-weight: bold; font-size: 1.2em; }
+    .tutorial-list li { margin-bottom: 0.5em; }
+    .code-label { font-size: 0.95em; color: #6c757d; margin-bottom: 0.2em; display: block; }
+    .step-num { font-weight: bold; color: #0d6efd; margin-left: 0.5em; }
+  </style>
+</head>
+<body class="container py-4">
+  <div class="text-center mb-4">
+    <img src="cic.png" alt="شعار CIC" style="max-width: 120px; background: #fff; padding: 10px; border-radius: 0; box-shadow: none;" />
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <h1 class="mb-4">🧾 مشروع 24: نموذج متعدد الخطوات (Multi-step Form)</h1>
+      <h2 class="section-title">🎯 هتتعلم إيه في المشروع ده؟</h2>
+      <ul class="tutorial-list">
+        <li>بناء نموذج متعدد الخطوات مع التحقق من صحة المدخلات في كل خطوة.</li>
+        <li>إدارة حالة النموذج المعقدة باستخدام `useState` و `useReducer`.</li>
+        <li>تنفيذ التحقق من صحة المدخلات (validation) باستخدام التعبيرات المنتظمة (RegEx).</li>
+        <li>إنشاء مؤشر تقدم (progress indicator) ديناميكي.</li>
+        <li>تخزين وإسترجاع بيانات النموذج مؤقتاً باستخدام `localStorage`.</li>
+        <li>التعامل مع الأخطاء وعرض رسائل التحقق بشكل فعال.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">🔧 التقنيات والمفاهيم المستخدمة</div>
+    <div class="card-body">
+      <ul>
+        <li>React functional components</li>
+        <li>`useReducer` لإدارة حالة النموذج المعقدة.</li>
+        <li>`useState` لإدارة الخطوة الحالية والأخطاء.</li>
+        <li>Form Validation باستخدام RegEx والتحقق المنطقي.</li>
+        <li>Conditional Rendering للخطوات المختلفة.</li>
+        <li>Event Handling لمعالجة التقديم والتنقل.</li>
+        <li>`localStorage` لحفظ البيانات مؤقتاً.</li>
+        <li>CSS Transitions لتحريك الخطوات.</li>
+        <li>Error Boundaries لمعالجة الأخطاء غير المتوقعة.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">📂 هيكلية الفولدرات</div>
+    <div class="card-body">
+      <pre><code class="language-bash">multi-step-form/
+├── node_modules/
+├── public/
+├── src/
+│   ├── App.jsx
+│   ├── components/
+│   │   ├── MultiStepForm.jsx
+│   │   ├── FormStep.jsx
+│   │   ├── ProgressBar.jsx
+│   │   └── ValidationMessage.jsx
+│   ├── utils/
+│   │   ├── formReducer.js
+│   │   └── validation.js
+│   ├── main.jsx
+│   └── index.css
+├── package.json
+└── vite.config.js</code></pre>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">🧩 شرح الكود خطوة بخطوة</div>
+    <div class="card-body">
+      <ol>
+        <li><b>formReducer.js</b>
+          <ul>
+            <li>تعريف الحالة المبدئية للنموذج وأنواع الإجراءات (actions).</li>
+            <li>تنفيذ دالة reducer للتعامل مع تحديثات الحالة المختلفة.</li>
+            <li>معالجة حالات التحديث، الإعادة للبداية، والتحقق من الصحة.</li>
+          </ul>
+        </li>
+        <li><b>validation.js</b>
+          <ul>
+            <li>دوال التحقق من صحة المدخلات لكل حقل:
+              <ul>
+                <li>التحقق من صحة البريد الإلكتروني باستخدام RegEx.</li>
+                <li>التحقق من صحة رقم الهاتف.</li>
+                <li>التحقق من تطابق كلمات المرور.</li>
+                <li>التحقق من الحقول الإلزامية.</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li><b>MultiStepForm.jsx</b>
+          <ul>
+            <li><b>State Management</b>:
+              <ul>
+                <li><code>useReducer</code> لإدارة بيانات النموذج.</li>
+                <li><code>useState</code> للخطوة الحالية والأخطاء.</li>
+                <li>استخدام `localStorage` لحفظ التقدم.</li>
+              </ul>
+            </li>
+            <li><b>Navigation Logic</b>:
+              <ul>
+                <li>دالة `nextStep` للتقدم مع التحقق من الصحة.</li>
+                <li>دالة `prevStep` للرجوع للخطوة السابقة.</li>
+                <li>دالة `handleSubmit` للتحقق النهائي وإرسال البيانات.</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li><b>FormStep.jsx</b>
+          <ul>
+            <li>مكون قابل لإعادة الاستخدام لكل خطوة.</li>
+            <li>يستقبل محتوى الخطوة وحالة التحقق كـ props.</li>
+            <li>يعرض حقول الإدخال والأخطاء الخاصة بالخطوة.</li>
+          </ul>
+        </li>
+        <li><b>ProgressBar.jsx</b>
+          <ul>
+            <li>عرض التقدم الحالي في النموذج.</li>
+            <li>تمييز الخطوات المكتملة والحالية.</li>
+            <li>استخدام CSS للتأثيرات البصرية.</li>
+          </ul>
+        </li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">📘 أخطاء شائعة وحلولها</div>
+    <div class="card-body">
+      <ul>
+        <li><b>فقدان البيانات</b>: عند تحديث الصفحة، يمكن فقدان البيانات المدخلة. الحل هو استخدام `localStorage` لحفظ الحالة تلقائياً.</li>
+        <li><b>تخطي التحقق</b>: يمكن للمستخدمين محاولة تخطي خطوات التحقق. تأكد من تنفيذ التحقق في كل من واجهة المستخدم والـ reducer.</li>
+        <li><b>عدم تناسق الحالة</b>: قد تصبح حالة النموذج غير متناسقة عند التنقل. استخدم `useReducer` لضمان تحديثات الحالة المتسقة.</li>
+        <li><b>أخطاء التحقق المتأخرة</b>: عرض رسائل الخطأ فوراً قد يزعج المستخدم. استخدم debouncing أو اعرض الأخطاء فقط بعد محاولة التقدم.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">📌 نصائح إضافية / استخدام عملي</div>
+    <div class="card-body">
+      <ul>
+        <li><b>Form Libraries</b>: في المشاريع الكبيرة، يمكن استخدام مكتبات مثل Formik أو React Hook Form لإدارة النماذج المعقدة.</li>
+        <li><b>Animations</b>: إضافة انتقالات سلسة بين الخطوات باستخدام React Transition Group.</li>
+        <li><b>Auto-Save</b>: تنفيذ حفظ تلقائي للبيانات كل فترة زمنية محددة.</li>
+        <li><b>Form Recovery</b>: إضافة زر لاستعادة البيانات المحفوظة سابقاً.</li>
+        <li><b>Keyboard Navigation</b>: دعم التنقل باستخدام لوحة المفاتيح للوصول الأفضل.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">الملخص</div>
+    <div class="card-body">
+      <ul>
+        <li>المشروع ده بيعلمك إزاي تتعامل مع النماذج المعقدة في React. مش مجرد form عادي، ده نظام كامل للتحقق من المدخلات وإدارة الحالة وتجربة المستخدم. هتتعلم إزاي تستخدم useReducer لإدارة الحالة المعقدة، وإزاي تتحقق من المدخلات بشكل فعال، وإزاي تحافظ على بيانات المستخدم. المهارات دي أساسية في أي تطبيق فيه تسجيل أو إدخال بيانات معقدة.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Prism.js for syntax highlighting -->
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-jsx.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-json.min.js"></script>
+  <div style="background: #fff; border-radius: 18px 18px 0 0; box-shadow: 0 -2px 12px rgba(102,126,234,0.07); margin-top: 3rem; padding: 1.2rem 0 0.7rem 0; text-align: center; color: #888; font-size: 1.05rem;">
+    <span>جميع الحقوق محفوظة &copy; 2025 - سلسلة تعليم React </span><br/>
+    <span>made by : <a href="https://github.com/Abdelrahman-sadek" target="_blank" style="color:#667eea; text-decoration:underline; font-weight:500;">Abdelrahman Sadek</a></span>
+  </div>
+</body>
+</html> 

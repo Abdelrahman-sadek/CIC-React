@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>مشروع 19: صفحة منتج تجارة إلكترونية (E-Commerce Product Page)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+  <style>
+    body { font-family: 'Cairo', sans-serif; background: #f8f9fa; }
+    pre, code { direction: ltr; text-align: left; font-family: 'Fira Mono', monospace; font-size: 1.05em; }
+    pre { background: #2d2d2d; color: #ccc; border-radius: 8px; padding: 1em; margin-bottom: 1.5em; overflow-x: auto; }
+    code { background: none; color: inherit; padding: 0; border-radius: 0; }
+    .section-title { margin-top: 2em; margin-bottom: 1em; font-weight: bold; }
+    .alert { font-size: 1.1em; }
+    .card { margin-bottom: 2em; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+    .card-header { background: #fff; font-weight: bold; font-size: 1.2em; }
+    .tutorial-list li { margin-bottom: 0.5em; }
+    .code-label { font-size: 0.95em; color: #6c757d; margin-bottom: 0.2em; display: block; }
+    .step-num { font-weight: bold; color: #0d6efd; margin-left: 0.5em; }
+  </style>
+</head>
+<body class="container py-4">
+  <div class="text-center mb-4">
+    <img src="cic.png" alt="شعار CIC" style="max-width: 120px; background: #fff; padding: 10px; border-radius: 0; box-shadow: none;" />
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <h1 class="mb-4">🛒 مشروع 19: صفحة منتج تجارة إلكترونية (E-Commerce Product Page)</h1>
+      <h2 class="section-title">🎯 هتتعلم إيه في المشروع ده؟</h2>
+      <ul class="tutorial-list">
+        <li>بناء صفحة منتج تفاعلية تشبه صفحات المتاجر الإلكترونية الحقيقية.</li>
+        <li>إدارة حالة السلة (cart) وإضافة المنتجات إليها.</li>
+        <li>قراءة البيانات من ملف JSON وعرضها ديناميكيًا.</li>
+        <li>استخدام props لنقل البيانات بين المكونات.</li>
+        <li>تطبيق مبادئ إعادة استخدام المكونات (Component Reusability).</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">🔧 التقنيات والمفاهيم المستخدمة</div>
+    <div class="card-body">
+      <ul>
+        <li>React functional components</li>
+        <li>useState لإدارة السلة.</li>
+        <li>قراءة بيانات المنتجات من ملف JSON محلي.</li>
+        <li>استخدام props لتمرير البيانات بين المكونات (لو تم فصل المنتج في مكون منفصل).</li>
+        <li>العرض الشرطي (Conditional Rendering) لعرض رسالة عند إضافة منتج للسلة.</li>
+        <li>استخدام map لعرض قائمة المنتجات ديناميكيًا.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">📂 هيكلية الفولدرات</div>
+    <div class="card-body">
+      <pre><code class="language-bash">ecommerce-product/
+├── node_modules/
+├── public/
+├── src/
+│   ├── App.jsx
+│   ├── ProductPage.jsx
+│   ├── products.json
+│   ├── main.jsx
+│   └── index.css
+├── package.json
+└── vite.config.js
+</code></pre>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">🧩 شرح الكود خطوة بخطوة</div>
+    <div class="card-body">
+      <ol>
+        <li><b>products.json</b>
+          <ul>
+            <li>ملف JSON يحتوي على مصفوفة من المنتجات (كل منتج كائن فيه id, name, price, image, description).</li>
+          </ul>
+        </li>
+        <li><b>ProductPage.jsx</b>
+          <ul>
+            <li><b>useState</b>:
+              <ul>
+                <li><code>cart</code>: مصفوفة المنتجات التي أضافها المستخدم للسلة.</li>
+              </ul>
+            </li>
+            <li><b>addToCart</b>: دالة لإضافة منتج للسلة. يمكن تطويرها لمنع تكرار نفس المنتج أو زيادة الكمية.</li>
+            <li><b>العرض</b>:
+              <ul>
+                <li>عرض عدد المنتجات في السلة أعلى الصفحة.</li>
+                <li>عرض المنتجات باستخدام map، ولكل منتج صورة، اسم، وصف، سعر، وزر "إضافة للسلة".</li>
+                <li>يمكنك عرض رسالة أو تغيير لون الزر عند إضافة منتج للسلة بنجاح.</li>
+              </ul>
+            </li>
+            <li><b>تحسين الأداء</b>: في تطبيقات أكبر، يمكن استخدام useMemo أو useCallback لتحسين الأداء عند التعامل مع قوائم كبيرة.</li>
+          </ul>
+        </li>
+        <li><b>App.jsx</b>
+          <ul>
+            <li>استيراد وعرض مكون <code>ProductPage</code> في التطبيق الرئيسي.</li>
+          </ul>
+        </li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">📘 أخطاء شائعة وحلولها</div>
+    <div class="card-body">
+      <ul>
+        <li><b>تكرار المنتج في السلة</b>: إذا لم تتحقق من وجود المنتج مسبقًا في السلة، قد يتم تكراره. يمكنك تعديل الدالة لإضافة كمية (quantity) بدل تكرار العنصر.</li>
+        <li><b>نسيان استيراد ملف JSON</b>: تأكد من أن مسار الاستيراد صحيح وأن الملف موجود في src.</li>
+        <li><b>نسيان تحديث عدد المنتجات في السلة</b>: يجب تحديث حالة السلة بعد كل إضافة.</li>
+        <li><b>نسيان key في map</b>: عند عرض المنتجات باستخدام map، يجب وضع خاصية key فريدة (يفضل id المنتج) لكل عنصر.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">📌 نصائح إضافية / استخدام عملي</div>
+    <div class="card-body">
+      <ul>
+        <li><b>إضافة صفحة للسلة</b>: يمكنك إنشاء صفحة أو مكون منفصل لعرض محتويات السلة مع إمكانية حذف منتج أو تغيير الكمية.</li>
+        <li><b>حفظ السلة في localStorage</b>: استخدم useEffect لحفظ السلة تلقائيًا واسترجاعها عند إعادة تحميل الصفحة.</li>
+        <li><b>إضافة إشعارات</b>: أضف إشعار (Toast) عند إضافة منتج للسلة بنجاح.</li>
+        <li><b>تحسين الواجهة</b>: استخدم ألوان أو أيقونات لتمييز المنتجات أو السلة.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">الملخص</div>
+    <div class="card-body">
+      <ul>
+        <li>في المشروع ده، اتعلمت إزاي تعرض منتجات وتضيفها للسلة زي المتاجر الحقيقية. أهم حاجة هي منطق إضافة المنتجات للسلة ومنع التكرار. جرب تضيف صفحة للسلة أو تحفظها في localStorage عشان تطور التطبيق أكتر.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Prism.js for syntax highlighting -->
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-jsx.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-json.min.js"></script>
+  <div style="background: #fff; border-radius: 18px 18px 0 0; box-shadow: 0 -2px 12px rgba(102,126,234,0.07); margin-top: 3rem; padding: 1.2rem 0 0.7rem 0; text-align: center; color: #888; font-size: 1.05rem;">
+    <span>جميع الحقوق محفوظة &copy; 2025 - سلسلة تعليم React </span><br/>
+    <span>made by : <a href="https://github.com/Abdelrahman-sadek" target="_blank" style="color:#667eea; text-decoration:underline; font-weight:500;">Abdelrahman Sadek</a></span>
+  </div>
+</body>
+</html> 
